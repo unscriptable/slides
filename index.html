@@ -45,12 +45,19 @@ Remove this if you use the .htaccess -->
 				"curl": "curl/src/curl",
 				"jquery": "jQuery/jquery",
 				"slides": "../slides",
-				"css": "../css",
-//				"when": "when/when",
-//				"my/Deferred": "my/whenDeferred"
-				"my/Deferred": "my/jqDeferred"
+				"css": "../css"
 			}
 		};
+
+		var paths = global.curl.paths;
+		if (/when/.test(window.location.href)) {
+			paths['when'] = 'when/when';
+			paths['my/Deferred'] = 'my/whenDeferred';
+		}
+		else {
+			paths['my/Deferred'] = 'my/jqDeferred';
+		}
+
 	})(window);
 
 </script>
