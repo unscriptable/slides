@@ -1,0 +1,147 @@
+/*
+	Copyright (c) 2011 Brian Cavalier
+	LICENSE: see the LICENSE.txt file. If file is missing, this file is subject
+	to the MIT License at: http://www.opensource.org/licenses/mit-license.php.
+*/
+
+@import "../basic.css";
+
+html, body {
+	position: relative;
+	height: 100%;
+	overflow: hidden;
+}
+
+body > div {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	right: 1em;
+}
+
+footer p {
+	color: #888;
+}
+
+.slide-view-module {
+	margin-top: 1em;
+}
+
+.slide {
+	font-size: 250%;
+}
+
+.slide h1 {
+	font-size: 4em;
+	font-weight: bold;
+	color: #666;
+	margin-bottom: 0;
+	letter-spacing: -.08em;
+	text-rendering: optimizeLegibility;
+}
+
+.slide h2 {
+	color: #444;
+	margin-top: 0;
+	margin-left: .5em;
+	font-size: 150%;
+}
+
+.slide h4 {
+	font-size: 70%;
+}
+
+.slide h5 {
+	font-size: 60%;
+}
+
+.slide p {
+	color: #222;
+	font-size: 80%;
+	margin-left: 2em;
+	margin-bottom: 0.375em;
+}
+
+.slide em {
+	font-style: normal;
+	font-weight: 900;
+	color: #036;
+}
+
+.slide ul {
+	font-size: 80%;
+	margin-left: 2.5em;
+}
+
+.slide ul.compact > li {
+	margin-bottom: 0.375em;
+}
+
+.slide ul > ul {
+	font-size: 90%;
+}
+
+.slide li {
+	line-height: 1em;
+	margin-bottom: .75em;
+}
+
+.slide .slide-layout-title {
+	padding-top: 1em;
+	text-align: center;
+}
+
+.slide .deemphasize {
+	opacity: 0.2;
+}
+
+pre {
+	font-size: 80%;
+}
+
+pre em {
+	background-color: #ff7;
+}
+
+.callout {
+	border: 1px solid #036;
+	background-color: #ff7;
+	padding: 0.25em;
+	float: right;
+	max-width: 8em;
+	text-align: right;
+}
+
+@media screen and (max-device-width: 480px) {
+	.slide-view-module {
+		margin-top: 2em;
+	}
+	
+	.slide {
+		font-size: 90%;
+	}
+
+	.slide .slide-layout-title {
+		padding-top: 0;
+	}
+	
+	.slide p {
+		font-size: 1.25em;
+		margin-left: .25em;
+	}
+	
+	.slide h2 {
+		margin-left: .25em;
+	}
+
+	.slide li {
+		font-size: 1.25em;
+	}
+
+}
