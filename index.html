@@ -40,19 +40,22 @@ Remove this if you use the .htaccess -->
 	(function(global) {
 		global.curl = {
 			apiName: 'loadItPlz',
+			baseUrl: 'js/',
 			paths: {
-				"curl": "js/curl/src/curl",
-				"jquery": "js/jQuery/jquery",
-				"hc": "js/hc",
-				"slides": "slides",
-				"css": "css"
+				"curl": "curl/src/curl",
+				"jquery": "jQuery/jquery",
+				"slides": "../slides",
+				"css": "../css",
+//				"when": "when/when",
+//				"my/Deferred": "my/whenDeferred"
+				"my/Deferred": "my/jqDeferred"
 			}
 		};
 	})(window);
 
 </script>
-<script type="text/javascript" data-main="path/to/loader" src="js/curl/dist/curl-for-jQuery1.7/curl.js"></script>
-<!--<script type="text/javascript" data-main="path/to/loader" src="js/curl/src/curl.js"></script>-->
+<script type="text/javascript" src="js/curl/dist/curl-for-jQuery1.7/curl.js"></script>
+<!--<script type="text/javascript" src="js/curl/src/curl.js"></script>-->
 <script type="text/javascript">
 
 	// Load the Model, View, Controller, theme, and transition css, then

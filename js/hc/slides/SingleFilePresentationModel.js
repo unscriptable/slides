@@ -7,7 +7,7 @@
 /*
 	Class: PresentationModel
 */
-define(['require', './Promise'], function(require, Promise) {
+define(['require', 'my/Deferred'], function(require, Deferred) {
 	
 	var defaultSeparator = /\s*\<hr\s*\/?\>\s*|\s*----\s*/i;
 	
@@ -56,13 +56,13 @@ define(['require', './Promise'], function(require, Promise) {
 					* content - the slide content
 			*/
 			get: function getSlide(slide) {
-				var promise = new Promise();
+				var deferred = new Deferred();
 				
 				function resolveSlide() {
 					if(0 <= slide && slide < cachedSlides.length) {
-						promise.resolve({ slide: slide, content: cachedSlides[slide] });
+						deferred.resolve({ slide: slide, content: cachedSlides[slide] });
 					} else {
-						promise.reject(slide);
+						deferred.reject(slide);
 					}
 				}
 				
@@ -72,7 +72,7 @@ define(['require', './Promise'], function(require, Promise) {
 					resolveOnLoad.push(resolveSlide);
 				}
 
-				return promise.safe();
+				return deferred.promise;
 			}
 		};
 		
