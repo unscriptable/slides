@@ -6,14 +6,11 @@
 /*
 	Class: PresentationController
 */
-define([], function() {
+define(['jquery', 'require'], function($, require) {
 	
-	var doc = window.document,
-		html = doc.getElementsByTagName('html')[0],
-		body = window.document.body,
+	var undef,
 		// Detect touch support
-		supportsTouch = 'ontouchstart' in body,
-		undef;
+		supportsTouch = 'ontouchstart' in $('body');
 	
 	/*
 		Function: setHash
@@ -50,32 +47,11 @@ define([], function() {
 		e.stopPropagation();
 	}
 	
-	/*
-		Function: addClass
-		Adds the supplied class to the supplied DOM node--will not add a duplicate
-		class name if the supplied class is already present.  Simple-minded, doesn't
-		handle arrays, multiple class names as input, doesn't check node type, etc.
-		
-		Parameters:
-			node - DOM node to which to add clss
-			clss - class name to add
-	*/
-	function addClass(node, clss) {
-		var cn = node.className,
-			cns = " " + cn + " ";
-		
-		if(cn) {
-			if(cn !== clss && cns.indexOf(clss) < 0) {
-				node.className += " " + clss;
-			}
-		} else {
-			node.className = clss;
-		}
-	}
-	
-	// Add touch support hint, a la Modernizr
-	addClass(html, supportsTouch ? "touch" : "no-touch");
-	
+	// Add touch support hint, a la Modernizr, when dom is ready
+	require('domReady!', function () {
+		$('HTML').addClass(supportsTouch ? "touch" : "no-touch");
+	});
+
 	/*
 		Function: initTouchEvents
 		Sets up touch events for navigating slides
@@ -85,57 +61,57 @@ define([], function() {
 	*/
 	function initTouchEvents(slideView) {
 		// TODO: Should use the slide view's container, not body.
-		body.ontouchstart = function(e) {
+		$('body').on('touchstart', function (e) {
 			var x = e.targetTouches[0].pageX,
 				y = e.targetTouches[0].pageY,
 				moved = false;
 
-			body.ontouchmove = function(e) {
-				moved = true;
-			};
-			
-			body.ontouchend = function(e) {
-				var ret = true;
-				try {
-					if(e.changedTouches.length === 1) {
-						var next;
+			$(this)
+				.on('touchmove', function(e) {
+					moved = true;
+				})
+				.on('touchend', function(e) {
+					var ret = true;
+					try {
+						if(e.changedTouches.length === 1) {
+							var next;
 
-						if(moved) {
-							var dx = e.changedTouches[0].pageX - x,
-								dy = e.changedTouches[0].pageY - y;
+							if(moved) {
+								var dx = e.changedTouches[0].pageX - x,
+									dy = e.changedTouches[0].pageY - y;
 
-							if(Math.abs(dx) > Math.abs(dy)) {
-								stopEvent(e);
-								next = dx <= 0;
+								if(Math.abs(dx) > Math.abs(dy)) {
+									stopEvent(e);
+									next = dx <= 0;
+								}
+
+								ret = false;
+
+							} else {
+								// stopEvent(e);
+								// next = e.changedTouches[0].pageX > (window.innerWidth/2);
 							}
-							
-							ret = false;
-							
-						} else {
-							// stopEvent(e);
-							// next = e.changedTouches[0].pageX > (window.innerWidth/2);
+
+							if(next != undef) {
+								setTimeout(function() {
+									slideView[next ? 'next' : 'prev']().then(success);
+								}, 0);
+							}
+
 						}
 
-						if(next != undef) {
-							setTimeout(function() {
-								slideView[next ? 'next' : 'prev']().then(success);
-							}, 0);
-						}
+						return ret;
 
+					} finally {
+						moved = false;
+						this.off('touchend');
+						this.off('touchmove');
 					}
+				});
 
-					return ret;
-					
-				} finally {
-					moved = false;
-					body.ontouchend = null;
-					body.ontouchmove = null;
-				}
-			};
-			
 			return ret;
-		};
-		
+		});
+
 	}
 	
 	/*
@@ -161,7 +137,7 @@ define([], function() {
 		a new PresentationController
 	*/
 	return function PresentationController(slideView) {		
-		window.onkeyup = function(e) {
+		$(window).on('keyup', function(e) {
 			var key = (window.event) ? event.keyCode : e.keyCode,
 				ret = true;
 			switch(key) {
@@ -181,7 +157,7 @@ define([], function() {
 			}
 			
 			return ret;
-		};
+		});
 		
 		// Goto first slide
 		var promise = slideView.go(getHash()).then(function(result) {
@@ -189,9 +165,9 @@ define([], function() {
 		});
 		
 		if('onhashchange' in window) {
-			window.onhashchange = function(e) {
+			$(window).on('hashchange', function(e) {
 				slideView.go(getHash());
-			};
+			});
 		}
 		
 		if(supportsTouch) {

@@ -65,19 +65,19 @@ define(['require', './Promise'], function(require, Promise) {
 				* content - the slide content
 		*/
 		function getSlide(slide, preloadCount) {
-			var p = new Promise(),
+			var promise = new Promise(),
 				slideModule = 'text!' + slidePath + '/' + slide + '.html';
 
 			if(0 <= slide) {
 				if(cachedSlides[slide]) {
-					p.resolve({ slide: slide, content: cachedSlides[slide] });
+					promise.resolve({ slide: slide, content: cachedSlides[slide] });
 				} else {
 					require([slideModule], function(slideContent) {
 						if(/404/.test(slideContent)) {
-							p.reject(slide);
+							promise.reject(slide);
 						} else {
 							cachedSlides[slide] = slideContent;
-							p.resolve({ slide: slide, content: slideContent });
+							promise.resolve({ slide: slide, content: slideContent });
 						}
 					});
 				}
@@ -87,10 +87,10 @@ define(['require', './Promise'], function(require, Promise) {
 				}
 				
 			} else {
-				p.reject(slide);
+				promise.reject(slide);
 			}
 			
-			return p.safe();
+			return promise.safe();
 		}
 
 		return {

@@ -9,7 +9,7 @@
 */
 define(['require', './Promise'], function(require, Promise) {
 	
-	var defaultSeparator = new RegExp("<hr(\s*\/\s*)?>");
+	var defaultSeparator = /\s*\<hr\s*\/?\>\s*|\s*----\s*/i;
 	
 	/*
 		Constructor: PresentationModel
@@ -21,7 +21,7 @@ define(['require', './Promise'], function(require, Promise) {
 			preload - (optional) number of slides to preload initially, and as slides are viewed
 		
 		Returns:
-		a new multi-file slide PresnetationModel
+		a new multi-file slide PresentationModel
 	*/
 	return function SingleFilePresentationModel(slidePath, separator) {
 		
@@ -30,12 +30,12 @@ define(['require', './Promise'], function(require, Promise) {
 			resolveOnLoad = [];
 			
 		require(['text!' + slidePath], function(slideContent) {
-			cachedSlides = slideContent.split(/\s*\<hr\s*\/?\>\s*|\s*----\s*/i);
+			cachedSlides = slideContent.split(defaultSeparator);
 			loaded = true;
 			
 			for (var i=0; i < resolveOnLoad.length; i++) {
 				resolveOnLoad[i]();
-			};
+			}
 			
 			resolveOnLoad = null;
 		});
@@ -56,13 +56,13 @@ define(['require', './Promise'], function(require, Promise) {
 					* content - the slide content
 			*/
 			get: function getSlide(slide) {
-				var p = new Promise();
+				var promise = new Promise();
 				
 				function resolveSlide() {
 					if(0 <= slide && slide < cachedSlides.length) {
-						p.resolve({ slide: slide, content: cachedSlides[slide] });
+						promise.resolve({ slide: slide, content: cachedSlides[slide] });
 					} else {
-						p.reject(slide);
+						promise.reject(slide);
 					}
 				}
 				
@@ -72,7 +72,7 @@ define(['require', './Promise'], function(require, Promise) {
 					resolveOnLoad.push(resolveSlide);
 				}
 
-				return p.safe();
+				return promise.safe();
 			}
 		};
 		
