@@ -8,7 +8,7 @@
 
 <!-- Parts from HTML5 Boilerplate: http://html5boilerplate.com -->
 
-<html lang="en">
+<html lang="en" class="presentation-loading">
 <head>
 <meta charset="utf-8">
 
@@ -16,8 +16,8 @@
 Remove this if you use the .htaccess -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-<title>Using AMD loaders to write and manage modular javascript</title>
-<meta name="description" content="Using AMD loaders to write and manage modular javascript">
+<title>Why wait for Harmony? Use Asynchronous Modules with jQuery now!</title>
+<meta name="description" content="Why wait for Harmony? Use Asynchronous Modules with jQuery now!">
 <meta name="author" content="John Hann">
 
 <!--  Mobile viewport optimized: adapted from Modernizr and
@@ -38,9 +38,11 @@ Remove this if you use the .htaccess -->
 <script type="text/javascript">
 
 	(function(global) {
-		global.require = {
+		global.curl = {
 			apiName: 'loadItPlz',
 			paths: {
+				"curl": "js/curl/src/curl",
+				"jquery": "js/jQuery/jquery",
 				"hc": "js/hc",
 				"slides": "slides",
 				"css": "css"
@@ -49,46 +51,41 @@ Remove this if you use the .htaccess -->
 	})(window);
 
 </script>
-<script type="text/javascript" data-main="path/to/loader" src="js/curl/src/curl.js"></script>
+<script type="text/javascript" data-main="path/to/loader" src="js/curl/dist/curl-for-jQuery1.7/curl.js"></script>
+<!--<script type="text/javascript" data-main="path/to/loader" src="js/curl/src/curl.js"></script>-->
 <script type="text/javascript">
 
 	// Load the Model, View, Controller, theme, and transition css, then
 	// bootstrap the presentation.
 	loadItPlz(
 		[
+			'jquery',
 			'hc/slides/SingleFilePresentationModel',
 			'hc/slides/SlideView',
 			'hc/slides/PresentationController',
-			'css!css/reset.css',
-			'css!css/themes/unscriptable/theme.css',
-			'css!css/themes/fade.css'
+			'link!css/reset.css',
+			'link!css/themes/unscriptable/theme.css',
+			'link!css/themes/fade.css',
+			'domReady!'
 		]
 	).then(
-		function(Model, View, Controller) {
+		function($, Model, View, Controller) {
 			var slides;
 
-			slides = View(document.getElementsByClassName('slide-container')[0], Model('slides/slides.html'));
+			slides = View($('.slide-container')[0], Model('slides/slides.html'));
 
-			Controller(slides).then(showPage);
+			Controller(slides).then(function () {
+				$('HTML').removeClass('presentation-loading');
+			});
 		},
 		function (ex) {
-			var messageNode = document.createTextNode(ex.message);
-			document.getElementsByClassName('slide-container')[0].appendChild(messageNode);
-			showPage();
+			// uh oh! no jQuery here!
+			console && console.error(ex);
+			var doc = document, text = doc.createTextNode(ex.message);
+			doc.getElementsByClassName('slide-container')[0].appendChild(text);
+			doc.documentElement.className = doc.documentElement.className.replace('presentation-loading', '');
 		}
 	);
-
-	function hidePage() {
-		var root = document.documentElement;
-		root.className += ' presentation-loading';
-	}
-
-	function showPage () {
-		var root = document.documentElement;
-		root.className = root.className.replace(/\s*presentation-loading\s*/g, " ");
-	}
-
-	hidePage();
 
 </script>
 </head>
