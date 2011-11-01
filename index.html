@@ -43,8 +43,7 @@ Remove this if you use the .htaccess -->
 			paths: {
 				"hc": "js/hc",
 				"slides": "slides",
-				"css": "css",
-				"cssx": "js/cssx/src/cssx"
+				"css": "css"
 			}
 		};
 	})(window);
@@ -60,9 +59,9 @@ Remove this if you use the .htaccess -->
 			'hc/slides/SingleFilePresentationModel',
 			'hc/slides/SlideView',
 			'hc/slides/PresentationController',
-			'cssx/cssx!css/reset.css',
-			'cssx/css!css/themes/unscriptable/theme.css',
-			'cssx/css!css/themes/fade.css'
+			'css!css/reset.css',
+			'css!css/themes/unscriptable/theme.css',
+			'css!css/themes/fade.css'
 		]
 	).then(
 		function(Model, View, Controller) {
