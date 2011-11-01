@@ -1,118 +1,724 @@
 <div class="slide-layout-title">
-	<h1>Slides</h1>
-	<h2>Presentations with HTML</h2>
+    <h2>Using AMD loaders to write and manage modular javascript</h2>
+    <h3>
+        <a href="http://www.meetup.com/javascript-2">Boston JavaScript</a>,
+        2011-04-11
+    </h3>
+    <h3>John Hann, UI Architect. lifeIMAGE, Inc.</h3>
+    <h3>
+        <a href="http://twitter.com/unscriptable/">@unscriptable</a>
+    </h3>
 </div>
-<hr>
-<div>
-	<h1>Why?</h1>
-	<p>I got fed up with using Keynote and Powerpoint to create and give presentations.  I'm a web developer for pete's sake, can't I do it in HTML?</p>
-</div>
-<hr>
-<div>
-	<h1>Yes</h1>
-	<p>So, I made a simple presentation framework for the web.  You're looking at it.</p>
-</div>
-<hr>
-<div>
-	<h1>Simple</h1>
-	<p>You just make slides in plain old HTML, and the framework will present them for you.  You can create themes and layouts with CSS.</p>
-</div>
-<hr>
-<div>
-	<h1>Examples</h1>
-	<p>The next few slides show some examples of very simple layouts you might expect to see in a slide presentation.</p>
-</div>
-<hr>
+
+<hr/>
+
 <div class="slide-layout-title">
-	<h1>Just a Title</h1>
+    <h1>huh?</h1>
+    <h2>"I thought you were going to talk about RequireJS?"</h2>
 </div>
-<hr>
+
+<hr/>
+
 <div class="slide-layout-title">
-	<h1>Title</h1>
-	<h2>With Subtitle</h2>
+    <h1>I will!</h1>
+    <h2>RequireJS started the <br/><em>AMD revolution</em>!</h2>
+	<p>*ducks*</p>
 </div>
-<hr>
-<div>
-	<h1>Title</h1>
-	<h2>Subtitle</h2>
-	<p>This is a slide with title, subtitle, and some paragraph text. This slide uses a different layout that shifts everything upward to account for the paragraph text.</p>
-</div>
-<hr>
-<div>
-	<h1>Title</h1>
-	<h2>Subtitle and Bullets</h2>
-	<ul>
-		<li>Titles, and paragraph text are just HTML elements</li>
-		<ul>
-			<li>e.g. <code>h1</code>, <code>h2</code>, <code>p</code></li>
-		</ul>
-		<li>Bullets, of course</li>
-		<ul>
-			<li>nest,</li>
-			<ul>
-				<li>as you'd expect</li>
-			</ul>
-		</ul>
-	</ul>
-</div>
-<hr>
-<div>
-	<h1>Links</h1>
-	<p>Since it's HTML, linking is easy, and means you don't have to jump out of Powerpoint or Keynote to view the link.  The back button works, too ... <a href="http://google.com/">try it</a></p>
-</div>
-<hr>
-<div>
-	<h1>More Links</h1>
-	<p>You can link to other slides, too, and the back button will still work like you think it should.  <a href="#11">Try it</a>.</p>
-</div>
-<hr>
-<div>
-	<h1>Layouts</h1>
-	<h2>Just use CSS</h2>
-	<ul>
-		<li>Layouts are just CSS classes</li>
-		<ul>
-			<li>e.g. <code>slide-layout-title</code></li>
-		</ul>
-		<li>There are a few built-in, as you've seen</li>
-		<li>You can define your own</li>
-	</ul>
-</div>
-<hr>
-<div>
-	<h1>Themes</h1>
-	<h2>You guessed it, CSS</h2>
-	<ul>
-		<li>Themes are also CSS classes</li>
-		<li>You're looking at the 'gray' theme right now</li>
-		<li>You can, of course, define your own</li>
-	</ul>
-</div>
-<hr>
-<div>
-	<h1>Transitions</h1>
-	<h2>CSS again!</h2>
-	<ul>
-		<li>Slide transitions are defined using CSS3</li>
-		<li>This presentation uses the 'fade' transition</li>
-		<li>Can be integrated into a theme or mixed-and-matched</li>
-		<li>And yep, you can define your own</li>
-	</ul>
-</div>
-<hr>
-<div>
-	<h1>Mobile</h1>
-	<h2>Landscape, portrait, touch, swipe</h2>
-	<p>It has mobile viewport support in the builtin template and themes, plus touch and swipe event support for navigation.</p>
-</div>
-<hr>
-<div>
-	<h1>Engineered</h1>
-	<h2>MVC, OOCSS, and AMD</h2>
-	<p>Cutting edge tech, packaged for simplicity.  Use it out of the box, or drop in code for your own slide models, views, and controllers.</p>
-</div>
-<hr>
+
+<hr/>
+
 <div class="slide-layout-title">
-	<h1>Get it</h1>
-	<h2>Now available on <a href="https://github.com/briancavalier/slides">github</a></h2>
+    <h1>What is AMD?</h1>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <span><em>A</em>synchronous</span>
+        <br/>
+        <span><em>M</em>odule</span>
+        <br/>
+        <span><em>D</em>efinition</span>
+    </h2>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <span><em>A</em>synchronous</span>
+        <br/>
+        <span class="deemphasize"><em>M</em>odule</span>
+        <br/>
+        <span class="deemphasize"><em>D</em>efinition</span>
+    </h2>
+	<p>why?</p>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <span><em>A</em>synchronous</span>
+        <br/>
+        <span class="deemphasize"><em>M</em>odule</span>
+        <br/>
+        <span class="deemphasize"><em>D</em>efinition</span>
+    </h2>
+    <ul>
+        <li>non-blocking</li>
+        <li>parallel loading</li>
+        <li>fast</li>
+    </ul>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <span class="deemphasize"><em>A</em>synchronous</span>
+        <br/>
+        <span><em>M</em>odule</span>
+        <br/>
+        <span class="deemphasize"><em>D</em>efinition</span>
+    </h2>
+	<p>why?</p>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <span class="deemphasize"><em>A</em>synchronous</span>
+        <br/>
+        <span><em>M</em>odule</span>
+        <br/>
+        <span class="deemphasize"><em>D</em>efinition</span>
+    </h2>
+    <ul>
+        <li>components</li>
+        <li>separation of concerns</li>
+        <li>improved maintainability</li>
+    </ul>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <span class="deemphasize"><em>A</em>synchronous</span>
+        <br/>
+        <span class="deemphasize"><em>M</em>odule</span>
+        <br/>
+        <span><em>D</em>efinition</span>
+    </h2>
+	<p>why?</p>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <span class="deemphasize"><em>A</em>synchronous</span>
+        <br/>
+        <span class="deemphasize"><em>M</em>odule</span>
+        <br/>
+        <span><em>D</em>efinition</span>
+    </h2>
+    <ul>
+        <li>well-defined / standardized</li>
+        <li>CommonJS <a href="http://www.commonjs.org/specs/">http://www.commonjs.org/specs/</a></li>
+        <li>ES-Harmony recommended migration path</li>
+    </ul>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        What is CommonJS?
+    </h2>
+    <ul>
+        <li><em>not</em> another js library</li>
+        <li><em>not</em> a set of best practices</li>
+        <li>proposals for standard APIs</li>
+        <li>guidelines for interoperability</li>
+    </ul>
+</div>
+
+<hr/>
+
+<div class="slide-layout-title">
+    <h1>
+        Why AMD?
+    </h1>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        Why AMD?
+    </h2>
+    <h3>freedom of choice</h3>
+    <ul class="compact">
+        <li>RequireJS <a href="http://requirejs.org/">http://requirejs.org/</a></li>
+        <li>curl.js <a href="http://github.com/unscriptable/curl">http://github.com/unscriptable/curl</a></li>
+        <li>bdLoad <a href="http://bdframework.org/bdLoad">http://bdframework.org/bdLoad</a></li>
+        <li>JSLocalnet <a href="http://www.localnet.org.es/">http://www.localnet.org.es/</a></li>
+        <li>Yabble <a href="http://github.com/jbrantly/yabble">http://github.com/jbrantly/yabble</a></li>
+        <li>PINF <a href="http://github.com/pinf/loader-js">http://github.com/pinf/loader-js</a></li>
+    </ul>
+    <p>(more "in the works")</p>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        Why AMD?
+    </h2>
+    <h3>plugins! AMD is not just for js modules</h3>
+    <ul>
+        <li>"standard" plugins: text!, i18n!, css!</li>
+        <li>cssx <a href="http://github.com/unscriptable/cssx">http://github.com/unscriptable/cssx</a></li>
+        <li>XStyle <a href="http://github.com/kriszyp/xstyle">http://github.com/kriszyp/xstyle</a></li>
+        <li>CoffeeScript <a href="http://gist.github.com/865150">http://gist.github.com/865150</a></li>
+        <li>Google Loader (Google Maps, etc.) <a href="http://gist.github.com/882682">http://gist.github.com/882682</a></li>
+        <li>LESS, etc.</li>
+    </ul>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        Why AMD?
+    </h2>
+    <h3>momentum</h3>
+    <ul>
+        <li>hundreds of RequireJS-based projects</li>
+        <li>dojo 1.6 <a href="http://dojotoolkit.org/">http://dojotoolkit.org/</a></li>
+        <li>BBC iPlayer <a href="http://www.bbc.co.uk/iplayer/radio">http://www.bbc.co.uk/iplayer/radio</a></li>
+        <li>Open Cooperative Web Framework <a href="http://opencoweb.org/">http://opencoweb.org/</a></li>
+        <li>Firebug 1.8 <a href="http://blog.getfirebug.com/2011/04/01/firebug-1-8a1/">http://blog.getfirebug.com/2011/04/01/firebug-1-8a1/</a></li>
+    </ul>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        Why AMD?
+    </h2>
+    <h3>interoperability</h3>
+    <p>node.js, narwhal, CommonJS Modules</p>
+    <p>(require wrapping / conversion)</p>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        How does AMD work?
+    </h2>
+    <ul>
+        <li><code>require()</code></li>
+        <li><code>define()</code></li>
+    </ul>
+    <p><code>define()</code> is the key to interop</p>
+</div>
+
+<hr/>
+
+<div class="slide-layout-title">
+    <h1>
+        <code>define<span style="color:red">(*)</span></code>
+    </h1>
+    <h2><span style="color:red">*</span> this is a gated community</h2>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>define()</code> <br/> The Gated Community
+    </h2>
+    <ul>
+        <li><em>strict</em> API definition</li>
+        <li>require, exports, and module parameters</li>
+        <li>ES-Harmony, CommonJS, and node.js conventions</li>
+    </ul>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>define()</code>
+    </h2>
+    <p class="callout">
+        typical module
+    </p>
+    <pre>
+define(
+    [
+        'depA',
+        'depB',
+        'depC'
+    ],
+    function (depA, depB, depC) {
+        var myModule = {};
+        // build your module here
+        myModule.foo = depA.getFoo();
+        return myModule;
+    }
+);
+    </pre>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>define()</code>
+    </h2>
+    <p class="callout">
+        module wrapper
+    </p>
+    <pre>
+<em>define</em>(
+    [
+        'depA',
+        'depB',
+        'depC'
+    ],
+    function (depA, depB, depC) {
+        var myModule = {};
+        // build your module here
+        myModule.foo = depA.getFoo();
+        return myModule;
+    }
+);
+    </pre>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>define()</code>
+    </h2>
+    <p class="callout">
+        dependency list
+    </p>
+    <pre>
+define(
+    <em>[
+        'depA',
+        'depB',
+        'depC'
+    ]</em>,
+    function (depA, depB, depC) {
+        var myModule = {};
+        // build your module here
+        myModule.foo = depA.getFoo();
+        return myModule;
+    }
+);
+    </pre>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>define()</code>
+    </h2>
+    <p class="callout">
+        definition function
+    </p>
+    <pre>
+define(
+    [
+        'depA',
+        'depB',
+        'depC'
+    ],
+    <em>function (depA, depB, depC) {
+        var myModule = {};
+        // build your module here
+        myModule.foo = depA.getFoo();
+        return myModule;
+    }</em>
+);
+    </pre>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>define()</code>
+    </h2>
+    <p class="callout">
+        this one defines an object (module)
+    </p>
+    <pre>
+define(
+    [
+        'depA',
+        'depB',
+        'depC'
+    ],
+    function (depA, depB, depC) {
+        var myModule = {};
+        // build your module here
+        myModule.foo = depA.getFoo();
+        <em>return myModule;</em>
+    }
+);
+    </pre>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>define()</code>
+    </h2>
+    <p class="callout">
+        can also define a constructor (shown)
+        or a function
+    </p>
+    <pre>
+define(
+    [
+        'depA',
+        'depB',
+        'depC'
+    ],
+    function (depA, depB, depC) {
+        function <em>myConstructor</em> {};
+        myConstructor.prototype = {
+            // specify methods and properties
+        };
+        return <em>myConstructor</em>;
+    }
+);
+    </pre>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>define()</code>
+    </h2>
+    <p class="callout">
+        simple module with no dependencies
+    </p>
+    <pre>
+define(<em>{
+    theAnswer: 42,
+    doubleIt: function (x) {
+        return 2 * x;
+    }
+}</em>);
+    </pre>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>define()</code>
+    </h2>
+    <p class="callout">
+        wrapper for a CommonJS module
+    </p>
+    <pre>
+define(
+
+    <em>/***** no deps *****/</em>
+
+    function (<em>require, exports, module</em>) {
+        if (/^https:\/\//.test(<em>module.uri</em>)) {
+            <em>exports</em>.isSecureTransport = true;
+        }
+        else {
+            <em>exports</em>.isSecureTransport = false;
+        }
+        // also: <code>this</code> === exports
+    }
+);
+    </pre>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>define()</code>
+    </h2>
+    <p class="callout">
+        nested <code>require()</code>.
+		note relative path!
+    </p>
+    <pre>
+define(
+    [
+        <em>'require'</em>,
+        'depA',
+    ],
+    function (<em>req</em>, depA) {
+        if (!(depA.optionalResource)) {
+            <em>req</em>(['<em>./</em>optionalResource'], function (opt) {
+                depA.optionalResource = opt;
+                depA.callback();
+            });
+        }
+        else {
+            depA.callback();
+        }
+    }
+);
+    </pre>
+</div>
+
+<hr/>
+
+<div class="slide-layout-title">
+    <h1>
+        <code>require(<span style="color:red">*</span>)</code>
+    </h1>
+    <h2><span style="color:red">*</span> this is <em>NOT</em> a gated community</h2>
+</div>
+
+<hr/>
+
+<div class="slide-layout-title">
+    <h1>
+        <code>require(<span style="color:red">!</span>)</code>
+    </h1>
+    <h2><span style="color:red;vertical-align:super;font-size:50%;">!</span> this is <em>The Wild West</em></h2>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>require()</code> <br/> The Wild West
+    </h2>
+    <ul>
+        <li>no proposed standard API</li>
+        <li>implementations vary</li>
+        <li><em>this is OK</em> since <code>require()</code>'s API affects ~1% of your code </li>
+		<li><code>require()</code> inside a <code>define()</code> must comply with spec!</li>
+    </ul>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>require()</code> <br/> The Wild West
+    </h2>
+    <p class="callout">simple example of <code>require()</code></p>
+    <pre>
+require(
+    ["modA", "modB"],
+    function (modA, modB) {
+        // do something with modA and modB
+        // when they are fully loaded
+    }
+);
+    </pre>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>require()</code> <br/> The Wild West
+    </h2>
+    <p class="callout">public API</p>
+    <pre>
+<em>require</em>(
+    ["modA", "modB"],
+    function (modA, modB) {
+        // do something with modA and modB
+        // when they are fully loaded
+    }
+);
+    </pre>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>require()</code> <br/> The Wild West
+    </h2>
+    <p class="callout">dependency list</p>
+    <pre>
+require(
+    <em>["modA", "modB"]</em>,
+    function (modA, modB) {
+        // do something with modA and modB
+        // when they are fully loaded
+    }
+);
+    </pre>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>require()</code> <br/> The Wild West
+    </h2>
+    <p class="callout">callback function</p>
+    <pre>
+require(
+    ["modA", "modB"],
+    <em>function (modA, modB) {
+        // do something with modA and modB
+        // when they are fully loaded
+    }</em>
+);
+    </pre>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>require()</code> <br/> The Wild West
+    </h2>
+    <p class="callout">domReady and RequireJS</p>
+    <pre>
+require(
+    [
+        "modA", 
+        "modB"
+    ],
+    function (modA, modB) {
+        <em>require.ready</em>(function () {
+            // do something with the dom, 
+            // modA, and modB
+        });
+    }
+);
+    </pre>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>require()</code> <br/> The Wild West
+    </h2>
+    <p class="callout">domReady and curl.js</p>
+    <pre>
+require(
+    [
+        "modA",
+        "modB",
+        "<em>curl/domReady</em>"
+    ],
+    function (modA, modB) {
+            // do something with the dom, 
+            // modA, and modB
+    }
+);
+    </pre>
+    <p><code>require()</code> is actually an alias for <code>curl()</code></p>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>require()</code> <br/> The Wild West
+    </h2>
+    <p class="callout">non-AMD Javascript and RequireJS</p>
+    <pre>
+require(
+    [
+        "<em>order!</em>modA<em>.js</em>",
+        "<em>order!</em>modB<em>.js</em>"
+    ],
+    function (modA, modB) {
+        // do something with modA and modB
+        // modB needs modA to be loaded first
+    }
+);
+    </pre>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>require()</code> <br/> The Wild West
+    </h2>
+    <p class="callout">non-AMD Javascript and curl.js</p>
+    <pre>
+require(
+    [
+        "<em>js!</em>modA<em>!order</em>",
+        "<em>js!</em>modB<em>!order</em>"
+    ],
+    function (modA, modB) {
+        // do something with modA and modB
+        // modB needs modA to be loaded first
+    }
+);
+    </pre>
+</div>
+
+<hr/>
+
+<div>
+    <h2>
+        <code>require()</code> <br/> The Wild West
+    </h2>
+    <p class="callout">curl.js's chaining API</p>
+    <pre>
+curl([
+    'curl/domReady',
+    'js!my/lib.js'
+]).<em>next</em>([
+    "js!modA!order",
+    "js!modB!order"
+]).<em>then</em>(
+    function (modA, modB) {
+        // do something
+    },
+    <em>function (ex) {
+        // show the loading error
+    }</em>
+);
+    </pre>
+</div>
+
+<hr/>
+
+<div class="slide-layout-title">
+    <h1>Show me the codez plz!</h1>
+</div>
+
+<hr/>
+
+<div class="slide-layout-title">
+    <h3>John Hann, UI Architect</h3>
+    <h3>lifeIMAGE, Inc.</h3>
+    <h5>
+        <a href="http://unscriptable.com/">unscriptable.com</a>
+        <br/>
+        <a href="http://twitter.com/unscriptable/">@unscriptable</a>
+    </h5>
+
 </div>

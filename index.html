@@ -4,90 +4,96 @@
 	Copyright (c) 2011 Brian Cavalier
 	LICENSE: see the LICENSE.txt file. If file is missing, this file is subject
 	to the MIT License at: http://www.opensource.org/licenses/mit-license.php.
-
-	This is a basic HTML template for creating slide presentations using
-	the slide framework.  
  -->
 
 <!-- Parts from HTML5 Boilerplate: http://html5boilerplate.com -->
 
-<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
-<!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+<html lang="en">
 <head>
-	<meta charset="utf-8">
+<meta charset="utf-8">
 
-	<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame 
-	Remove this if you use the .htaccess -->
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+Remove this if you use the .htaccess -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title>HTML Slide Presentation Framework</title>
-	<meta name="description" content="HTML Slide Presentation framework">
-	<meta name="author" content="Brian Cavalier">
+<title>Using AMD loaders to write and manage modular javascript</title>
+<meta name="description" content="Using AMD loaders to write and manage modular javascript">
+<meta name="author" content="John Hann">
 
-	<!--  Mobile viewport optimized: adapted from Modernizr and
-	      http://stackoverflow.com/questions/2581957/iphone-safari-does-not-auto-scale-back-down-on-portrait-landscape-portrait
-	 -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, maximum-scale=1.0">
-	<meta name="apple-mobile-web-app-capable" content="yes"/>
-	
-	<!-- Ensure no FUOC in the slides -->
-	<style type="text/css">
-		.presentation-loading * {
-			visibility: hidden;
+<!--  Mobile viewport optimized: adapted from Modernizr and
+	  http://stackoverflow.com/questions/2581957/iphone-safari-does-not-auto-scale-back-down-on-portrait-landscape-portrait
+ -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+
+<!-- Ensure no FUOC in the slides -->
+<style type="text/css">
+	.presentation-loading * {
+		visibility: hidden;
+	}
+</style>
+
+<!-- Configure curl.js to load slides from the slides dir, and css from
+	 the css dir.  Note that these are relative to the location this page -->
+<script type="text/javascript">
+
+	(function(global) {
+		global.require = {
+			apiName: 'loadItPlz',
+			paths: {
+				"hc": "js/hc",
+				"slides": "slides",
+				"css": "css",
+				"cssx": "js/cssx/src/cssx"
+			}
+		};
+	})(window);
+
+</script>
+<script type="text/javascript" data-main="path/to/loader" src="js/curl/src/curl.js"></script>
+<script type="text/javascript">
+
+	// Load the Model, View, Controller, theme, and transition css, then
+	// bootstrap the presentation.
+	loadItPlz(
+		[
+			'hc/slides/SingleFilePresentationModel',
+			'hc/slides/SlideView',
+			'hc/slides/PresentationController',
+			'cssx/cssx!css/reset.css',
+			'cssx/css!css/themes/unscriptable/theme.css',
+			'cssx/css!css/themes/fade.css'
+		]
+	).then(
+		function(Model, View, Controller) {
+			var slides;
+
+			slides = View(document.getElementsByClassName('slide-container')[0], Model('slides/slides.html'));
+
+			Controller(slides).then(showPage);
+		},
+		function (ex) {
+			var messageNode = document.createTextNode(ex.message);
+			document.getElementsByClassName('slide-container')[0].appendChild(messageNode);
+			showPage();
 		}
-	</style>
-	
-	<!-- <script src="js/modernizr-1.6.min.js" type="text/javascript" charset="utf-8"></script> -->
+	);
 
-	<!-- Configure RequireJS to load slides from the slides dir, and css from
-	     the css dir.  Note that these are relative to the location of require.js -->
-	<script type="text/javascript">
-		(function(global) {
-			global.require = {
-				baseUrl: "js",
-				paths: {
-					"slides": "../slides",
-					"css": "../css"
-				}
-			};
-		})(window);
-	</script>
-	<script type="text/javascript" src="js/require.js"></script>
-	<script type="text/javascript">
-		// Load the Model, View, Controller, theme, and transition css, then
-		// bootstrap the presentation.
-		require(
-			[
-				'hc/slides/SingleFilePresentationModel',        // Model, i.e. slide content from a single HTML file
-				// 'hc/slides/PresentationModel',        // Use this Model instead if you have a dir full of html files
-				'hc/slides/SlideView',                // View
-				'hc/slides/PresentationController',   // Controller
-				'cssx/css!css/themes/gray/theme.css', // Slide theme
-				'cssx/css!css/themes/fade.css'        // Slide transition
-			],
-			function(Model, View, Controller) {
-				// The relative path to the slides
-				var slidePath = 'slides';
-				
-				// Create the view and hand it a model, in this case SingleFilePresentationModel that we point
-				// at an html files containing all the slides.
-				var slides = View(document.getElementsByClassName('slide-container')[0], Model('slides/slides.html'));
-				
-				// Of, if you prefer to use a directory full of files, use PresentationModel
-				// var slides = View(document.getElementsByClassName('slide-container')[0], Model('slides'));
-				
-				Controller(slides);
-			});
-	</script>
+	function hidePage() {
+		var root = document.documentElement;
+		root.className += ' presentation-loading';
+	}
+
+	function showPage () {
+		var root = document.documentElement;
+		root.className = root.className.replace(/\s*presentation-loading\s*/g, " ");
+	}
+
+	hidePage();
+
+</script>
 </head>
-
-<!-- Avoid any FUOC by adding presentation-loading, which the framework
-     will remove later once the first slide is ready -->
-<body class="presentation-loading">
+<body>
 
 	<div>
 		<header>
@@ -99,13 +105,13 @@
 
 		</div>
 
-		<!-- Extra notes -->
-		<footer>
-			<p class="slide-no-touch">Use <em>left/right arrows, or space</em> to move between slides</p>
-			<p class="slide-touch"><em>Swipe left or right</em> to move between slides</p>
-			<p>Copyright &copy; 2011 Brian Cavalier</p>
-		</footer>
 	</div>
-	
+	<!-- Extra notes -->
+	<footer>
+		<p class="slide-no-touch">Use <em>left/right arrows, or space</em> to move between slides</p>
+		<p class="slide-touch"><em>Swipe left or right</em> to move between slides</p>
+		<p>Content copyright &copy; <a href="http://unscriptable.com">unscriptable.com</a>. Slides Framework Copyright &copy; 2011 <a href="http://hovercraftstudios.com/">Brian Cavalier</a></p>
+	</footer>
+
 </body>
 </html>
